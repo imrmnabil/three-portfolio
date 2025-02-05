@@ -1,14 +1,24 @@
 import React from "react";
 import { myProjects } from "../constants";
-import { div } from "three/tsl";
+import { Canvas } from "@react-three/fiber";
+import { Center, OrbitControls } from "@react-three/drei";
+import { Suspense } from "react";
+import CanvasLoader from "../components/CanvasLoader";
+import DemoComputer from "../components/DemoComputer";
 
 const Projects = () => {
   const [currentProjectIndex, setCurrentProjectIndex] = React.useState(0);
   const currentProject = myProjects[currentProjectIndex];
+  const projectCount = myProjects.length;
   const handleNavigation = (direction) => {
     if (direction === "previous") {
       setCurrentProjectIndex((prevIndex) => {
-        
+        return prevIndex === 0 ? projectCount - 1 : prevIndex - 1;
+      });
+    }
+    else if (direction === "next") {
+      setCurrentProjectIndex((prevIndex) => {
+        return prevIndex === projectCount - 1 ? 0 : prevIndex + 1;
       });
     }
   };
@@ -63,12 +73,30 @@ const Projects = () => {
             <button
               className="arrow-btn"
               onClick={() => handleNavigation("previous")}
-            ></button>
+            >
+              <img src="/assets/left-arrow.png" alt="left arrow" className="w-4 h-4"/>
+            </button>
             <button
               className="arrow-btn"
               onClick={() => handleNavigation("next")}
-            ></button>
+            >
+              <img src="/assets/right-arrow.png" alt="right arrow" className="w-4 h-4"/>
+            </button>
           </div>
+        </div>
+        <div className="border border-black-300 bg-black-200 rounded-lg h-96 md:h-full">
+              <Canvas>
+                <ambientLight intensity={3}/>
+                <directionalLight position={[10, 10, 5]}/>
+                <Center>
+                  <Suspense fallback={<CanvasLoader />}>
+                    <group scale={2} position={[0, -3, 0]} >
+                        <DemoComputer texture={currentProject.texture}/>
+                    </group>
+                  </Suspense>
+                </Center>
+                <OrbitControls enableZoom={false}  maxPolarAngle={Math.PI /2} maxAzimuthAngle={Math.PI / 2}/>
+              </Canvas>
         </div>
       </div>
     </section>

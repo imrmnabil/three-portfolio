@@ -29,7 +29,7 @@ const Hero = () => {
                 <Leva hidden />
                 <Canvas className='w-full h-full'>
                     <Suspense fallback={<CanvasLoader />}>
-                        <PerspectiveCamera makeDefault fov={75} position={[0, 0, 30]} />
+                        <PerspectiveCamera makeDefault fov={50} position={[0, 0, 30]} />
                         <HeroCamera isMobile={isMobile}>
                             <HackerRoom scale={sizes.deskScale} position={sizes.deskPosition} rotation={[0.1, -Math.PI, 0]} />
                         </HeroCamera>
@@ -46,8 +46,8 @@ const Hero = () => {
                 </Canvas>
             </div>
             <div className='absolute bottom-7 left-0 right-0 w-full z-10 c-space'>
-                <a href="#contact" className='w-fit'>
-                    <Button name="Contact Me" isBeam containerClass="sm:w-fit w-full sm:min-w-96"/>
+                <a href="#about" className='w-fit'>
+                    <Button name="Lets Explore" isBeam containerClass="sm:w-fit w-full sm:min-w-96"/>
                 </a>
 
             </div>
